@@ -65,20 +65,16 @@ public final class NNLauncher
     private Injector mainInjector;
 
     @Inject
-    private JCommander jCommander;
-
-    @Inject
     @Named( "name" )
     private String projectName;
+
+    @Inject
+    @Named( "app.name" )
+    private String applicationName;
 
     public void setMainInjector( Injector mainInjector )
     {
         this.mainInjector = mainInjector;
-    }
-
-    public void setjCommander( JCommander jCommander )
-    {
-        this.jCommander = jCommander;
     }
 
     public void setProjectName( String projectName )
@@ -86,8 +82,15 @@ public final class NNLauncher
         this.projectName = projectName;
     }
 
+    public void setApplicationName( String applicationName )
+    {
+        this.applicationName = applicationName;
+    }
+
     public int execute( String...args )
     {
+        final JCommander jCommander = new JCommander( this );
+        jCommander.setProgramName( applicationName );
         jCommander.parse( args );
 
         if ( printHelp )
@@ -214,8 +217,6 @@ public final class NNLauncher
                 bindProperties( getClass()
                                 .getClassLoader()
                                 .getResource( "META-INF/maven/org.99soft/99launcher/pom.properties" ) );
-                // the JCommander
-                bind( JCommander.class ).toProvider( JCommanderProvider.class ).in( SINGLETON );
             }
 
         } ).getInstance( NNLauncher.class ).execute( args ) );

@@ -22,8 +22,22 @@
     <groupId>org.99soft</groupId>
     <artifactId>99launcher-parent</artifactId>
     <version>0.1-SNAPSHOT</version>
+    <relativePath>../</relativePath>
   </parent>
 
   <artifactId>99launcher-command-api</artifactId>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.99soft.guice.sli4j</groupId>
+      <artifactId>sli4j-core</artifactId>
+      <scope>provided</scope>
+    </dependency>
+  </dependencies>
 
 </project>

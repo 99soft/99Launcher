@@ -22,11 +22,22 @@
     <groupId>org.99soft</groupId>
     <artifactId>99launcher-parent</artifactId>
     <version>0.1-SNAPSHOT</version>
+    <relativePath>../</relativePath>
   </parent>
 
   <artifactId>99launcher</artifactId>
+  <packaging>jar</packaging>
 
   <dependencies>
+    <!--
+     | commands APIs
+    -->
+    <dependency>
+      <groupId>org.99soft</groupId>
+      <artifactId>99launcher-command-api</artifactId>
+      <version>0.1-SNAPSHOT</version>
+    </dependency>
+
     <!--
      | CLI
     -->
@@ -65,7 +76,6 @@
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
-      <version>1.6.4</version>
     </dependency>
     <dependency>
       <groupId>ch.qos.logback</groupId>
@@ -75,7 +85,6 @@
     <dependency>
       <groupId>org.99soft.guice.sli4j</groupId>
       <artifactId>sli4j-core</artifactId>
-      <version>3.1</version>
     </dependency>
     <dependency>
       <groupId>org.99soft.guice.sli4j</groupId>

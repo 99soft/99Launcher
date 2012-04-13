@@ -1,4 +1,4 @@
-package org.nnsoft.nnlauncher;
+package org.nnsoft.nnlauncher.command;
 
 /*
  *    Copyright 2012 The 99 Software Foundation

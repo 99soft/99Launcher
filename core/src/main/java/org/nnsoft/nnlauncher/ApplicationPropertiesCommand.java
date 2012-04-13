@@ -20,6 +20,10 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
+import org.nnsoft.nnlauncher.command.AbstractCommand;
+import org.nnsoft.nnlauncher.command.ExecutionException;
+import org.nnsoft.nnlauncher.command.FailureException;
+
 @Singleton
 public final class ApplicationPropertiesCommand
     extends AbstractCommand

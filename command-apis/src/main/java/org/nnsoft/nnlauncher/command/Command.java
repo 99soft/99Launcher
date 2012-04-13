@@ -1,4 +1,4 @@
-package org.nnsoft.nnlauncher;
+package org.nnsoft.nnlauncher.command;
 
 import org.slf4j.Logger;
 

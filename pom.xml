@@ -24,13 +24,19 @@
     <version>7</version>
   </parent>
 
-  <artifactId>99launcher</artifactId>
+  <artifactId>99launcher-parent</artifactId>
   <version>0.1-SNAPSHOT</version>
+  <packaging>pom</packaging>
 
   <name>99Launcher</name>
   <description>lightweight CLI commands launcher, based on JCommander and Google Guice</description>
   <url>http://99soft.github.com/99Launcher/</url>
   <inceptionYear>2012</inceptionYear>
+
+  <modules>
+    <module>command-apis</module>
+    <module>core</module>
+  </modules>
 
   <scm>
     <url>http://github.com/99soft/99Launcher</url>
@@ -48,119 +54,19 @@
     </site>
   </distributionManagement>
 
-  <dependencies>
-    <!--
-     | CLI
-    -->
-    <dependency>
-      <groupId>com.beust</groupId>
-      <artifactId>jcommander</artifactId>
-      <version>1.23</version>
-    </dependency>
-
-    <!--
-     | DI
-    -->
-    <dependency>
-      <groupId>javax.inject</groupId>
-      <artifactId>javax.inject</artifactId>
-      <version>1</version>
-    </dependency>
-    <dependency>
-      <groupId>com.google.inject</groupId>
-      <artifactId>guice</artifactId>
-      <version>3.0</version>
-    </dependency>
-
-    <!--
-     | configuration
-    -->
-    <dependency>
-      <groupId>org.99soft.guice</groupId>
-      <artifactId>rocoto</artifactId>
-      <version>6.1</version>
-    </dependency>
-
-    <!--
-     | logging
-    -->
-    <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-api</artifactId>
-      <version>1.6.4</version>
-    </dependency>
-    <dependency>
-      <groupId>ch.qos.logback</groupId>
-      <artifactId>logback-classic</artifactId>
-      <version>1.0.1</version>
-    </dependency>
-    <dependency>
-      <groupId>org.99soft.guice.sli4j</groupId>
-      <artifactId>sli4j-core</artifactId>
-      <version>3.1</version>
-    </dependency>
-    <dependency>
-      <groupId>org.99soft.guice.sli4j</groupId>
-      <artifactId>sli4j-slf4j</artifactId>
-      <version>3.1</version>
-    </dependency>
-  </dependencies>
-
-  <build>
-    <resources>
-      <resource>
-        <directory>${basedir}/src/main/resources</directory>
-        <filtering>true</filtering>
-      </resource>
-    </resources>
-
-    <plugins>
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>appassembler-maven-plugin</artifactId>
-        <version>1.1.1</version>
-        <executions>
-          <execution>
-            <phase>package</phase>
-            <goals>
-              <goal>assemble</goal>
-            </goals>
-          </execution>
-        </executions>
-        <configuration>
-          <repositoryLayout>flat</repositoryLayout>
-          <repositoryName>lib</repositoryName>
-          <defaultJvmSettings>-Xms500m -Xmx500m -XX:PermSize=128m -XX:-UseGCOverheadLimit</defaultJvmSettings>
-          <programs>
-            <program>
-              <mainClass>org.nnsoft.nnlauncher.NNLauncher</mainClass>
-              <name>nnl</name>
-            </program>
-          </programs>
-        </configuration>
-      </plugin>
-
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-assembly-plugin</artifactId>
-        <version>2.3</version>
-        <executions>
-          <execution>
-            <id>assembly</id>
-            <phase>package</phase>
-            <goals>
-              <goal>single</goal>
-            </goals>
-          </execution>
-        </executions>
-        <configuration>
-          <tarLongFileMode>gnu</tarLongFileMode>
-          <descriptors>
-            <descriptor>${basedir}/src/main/assembly/bin.xml</descriptor>
-          </descriptors>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-api</artifactId>
+        <version>1.6.4</version>
+      </dependency>
+      <dependency>
+        <groupId>org.99soft.guice.sli4j</groupId>
+        <artifactId>sli4j-core</artifactId>
+        <version>3.1</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
 
 </project>

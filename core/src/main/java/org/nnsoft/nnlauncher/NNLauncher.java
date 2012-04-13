@@ -18,17 +18,23 @@ package org.nnsoft.nnlauncher;
 
 import static com.google.inject.Guice.createInjector;
 import static com.google.inject.Scopes.SINGLETON;
+import static java.lang.Runtime.getRuntime;
+import static java.lang.System.currentTimeMillis;
 import static java.lang.System.exit;
 import static java.util.Collections.emptyMap;
+import static org.slf4j.LoggerFactory.getILoggerFactory;
+import static org.slf4j.LoggerFactory.getLogger;
 
+import java.util.Date;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 import org.nnsoft.guice.rocoto.configuration.ConfigurationModule;
 import org.nnsoft.guice.sli4j.slf4j.Slf4jLoggingModule;
-import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import ch.qos.logback.classic.LoggerContext;
 import ch.qos.logback.classic.joran.JoranConfigurator;
@@ -61,6 +67,10 @@ public final class NNLauncher
     @Inject
     private JCommander jCommander;
 
+    @Inject
+    @Named( "name" )
+    private String projectName;
+
     public void setMainInjector( Injector mainInjector )
     {
         this.mainInjector = mainInjector;
@@ -69,6 +79,11 @@ public final class NNLauncher
     public void setjCommander( JCommander jCommander )
     {
         this.jCommander = jCommander;
+    }
+
+    public void setProjectName( String projectName )
+    {
+        this.projectName = projectName;
     }
 
     public void execute( String...args )
@@ -106,7 +121,7 @@ public final class NNLauncher
         }
 
         // assume SLF4J is bound to logback in the current environment
-        final LoggerContext lc = (LoggerContext) LoggerFactory.getILoggerFactory();
+        final LoggerContext lc = (LoggerContext) getILoggerFactory();
 
         try
         {
@@ -120,6 +135,64 @@ public final class NNLauncher
         catch ( JoranException je )
         {
             // StatusPrinter should handle this
+        }
+
+        // RUN!
+
+        final Logger logger = getLogger( getClass() );
+
+        logger.info( "" );
+        logger.info( "------------------------------------------------------------------------" );
+        logger.info( projectName );
+        logger.info( "------------------------------------------------------------------------" );
+        logger.info( "" );
+
+        int exit = 0;
+        long start = currentTimeMillis();
+
+        Throwable error = null;
+        try
+        {
+            // TODO
+        }
+        catch ( Throwable t )
+        {
+            exit = 1;
+            error = t;
+        }
+        finally
+        {
+            logger.info( "" );
+            logger.info( "------------------------------------------------------------------------" );
+            logger.info( "{} {}", projectName, ( exit < 0 ) ? "FAILURE" : "SUCCESS" );
+
+            if ( exit < 0 )
+            {
+                logger.info( "" );
+
+                if ( debug )
+                {
+                    logger.error( "Execution terminated with errors", error );
+                }
+                else
+                {
+                    logger.error( "Execution terminated with errors: {}", error.getMessage() );
+                }
+
+                logger.info( "" );
+            }
+
+            logger.info( "Total time: {}s", ( ( currentTimeMillis() - start ) / 1000 ) );
+            logger.info( "Finished at: {}", new Date() );
+
+            final Runtime runtime = getRuntime();
+            final int megaUnit = 1024 * 1024;
+            logger.info( "Final Memory: {}M/{}M", ( runtime.totalMemory() - runtime.freeMemory() ) / megaUnit,
+                         runtime.totalMemory() / megaUnit );
+
+            logger.info( "------------------------------------------------------------------------" );
+
+            exit( exit );
         }
     }
 

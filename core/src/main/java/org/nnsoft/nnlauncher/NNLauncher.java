@@ -190,7 +190,8 @@ public final class NNLauncher
 
             final Runtime runtime = getRuntime();
             final int megaUnit = 1024 * 1024;
-            logger.info( "Final Memory: {}M/{}M", ( runtime.totalMemory() - runtime.freeMemory() ) / megaUnit,
+            logger.info( "Final Memory: {}M/{}M",
+                         ( runtime.totalMemory() - runtime.freeMemory() ) / megaUnit,
                          runtime.totalMemory() / megaUnit );
 
             logger.info( "------------------------------------------------------------------------" );

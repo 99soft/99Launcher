@@ -86,14 +86,14 @@ public final class NNLauncher
         this.projectName = projectName;
     }
 
-    public void execute( String...args )
+    public int execute( String...args )
     {
         jCommander.parse( args );
 
         if ( printHelp )
         {
             jCommander.usage();
-            exit( -1 );
+            return -1;
         }
 
         if ( showVersion )
@@ -106,7 +106,7 @@ public final class NNLauncher
             {
                 // ignore, doesn't happen
             }
-            exit( -1 );
+            return -1;
         }
 
         // setup the logging stuff
@@ -166,7 +166,7 @@ public final class NNLauncher
             logger.info( "------------------------------------------------------------------------" );
             logger.info( "{} {}", projectName, ( exit < 0 ) ? "FAILURE" : "SUCCESS" );
 
-            if ( exit < 0 )
+            if ( exit > 0 )
             {
                 logger.info( "" );
 
@@ -191,15 +191,15 @@ public final class NNLauncher
                          runtime.totalMemory() / megaUnit );
 
             logger.info( "------------------------------------------------------------------------" );
-
-            exit( exit );
         }
+
+        return exit;
     }
 
     public static void main( String[] args )
     {
         // setup the DI container
-        createInjector( new Slf4jLoggingModule(),
+        exit( createInjector( new Slf4jLoggingModule(),
         new ConfigurationModule()
         {
 
@@ -218,7 +218,7 @@ public final class NNLauncher
                 bind( JCommander.class ).toProvider( JCommanderProvider.class ).in( SINGLETON );
             }
 
-        } ).getInstance( NNLauncher.class ).execute( args );
+        } ).getInstance( NNLauncher.class ).execute( args ) );
     }
 
 }

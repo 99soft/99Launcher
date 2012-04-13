@@ -167,7 +167,7 @@ public final class NNLauncher
         {
             logger.info( "" );
             logger.info( "------------------------------------------------------------------------" );
-            logger.info( "{} {}", projectName, ( exit < 0 ) ? "FAILURE" : "SUCCESS" );
+            logger.info( "{} {}", projectName, ( exit > 0 ) ? "FAILURE" : "SUCCESS" );
 
             if ( exit > 0 )
             {

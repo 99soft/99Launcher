@@ -21,7 +21,7 @@
   <parent>
     <groupId>org.99soft</groupId>
     <artifactId>oss-parent</artifactId>
-    <version>7</version>
+    <version>9</version>
   </parent>
 
   <artifactId>99launcher-parent</artifactId>
